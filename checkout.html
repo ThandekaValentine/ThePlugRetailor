@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout – The Plug Retailor. Enter your delivery details and complete your order." />
+  <title>Checkout | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Checkout</p>
+</div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Checkout</h1>
+    <p>Complete your delivery details to place your order.</p>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Checkout steps">
+      <a href="cart.html">Cart</a>
+      <span class="sep">›</span>
+      <strong>Checkout</strong>
+      <span class="sep">›</span>
+      <span style="color:var(--text-muted)">Payment</span>
+    </nav>
+
+    <div id="emptyCartMsg" style="display:none;" class="cart-empty">
+      <div class="icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <a href="products.html" class="btn btn--primary" style="margin-top:1rem">Shop Now</a>
+    </div>
+
+    <div id="checkoutLayout" class="checkout-layout">
+      <!-- Customer Form -->
+      <div>
+        <form id="checkoutForm" novalidate>
+          <!-- Customer Info -->
+          <div class="form-card" style="margin-bottom:1.5rem;">
+            <h2>📦 Delivery Information</h2>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" placeholder="e.g. Thandi Mthembu" autocomplete="name" required />
+                <span class="form-error">Please enter your full name.</span>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="your@email.com" autocomplete="email" required />
+                <span class="form-error">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" placeholder="+27 82 000 0000" autocomplete="tel" required />
+                <span class="form-error">Please enter your phone number.</span>
+              </div>
+              <div class="form-group full">
+                <label for="address">Street Address *</label>
+                <input type="text" id="address" placeholder="123 Example Street" autocomplete="street-address" required />
+                <span class="form-error">Please enter your street address.</span>
+              </div>
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" placeholder="Johannesburg" autocomplete="address-level2" required />
+                <span class="form-error">Please enter your city.</span>
+              </div>
+              <div class="form-group">
+                <label for="province">Province *</label>
+                <select id="province" required autocomplete="address-level1">
+                  <option value="">Select Province</option>
+                  <option>Gauteng</option>
+                  <option>Western Cape</option>
+                  <option>KwaZulu-Natal</option>
+                  <option>Eastern Cape</option>
+                  <option>Limpopo</option>
+                  <option>Mpumalanga</option>
+                  <option>North West</option>
+                  <option>Free State</option>
+                  <option>Northern Cape</option>
+                </select>
+                <span class="form-error">Please select your province.</span>
+              </div>
+              <div class="form-group">
+                <label for="postal">Postal Code *</label>
+                <input type="text" id="postal" placeholder="2000" maxlength="4" autocomplete="postal-code" required />
+                <span class="form-error">Please enter a valid 4-digit postal code.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delivery Options -->
+          <div class="form-card">
+            <h2>🚚 Delivery Method</h2>
+            <div class="delivery-options" id="deliveryOptions" role="radiogroup" aria-label="Delivery options">
+              <label class="delivery-option selected" data-key="standard">
+                <input type="radio" name="delivery" value="standard" checked />
+                <div class="delivery-option__label">
+                  <div class="delivery-option__name">Standard Delivery</div>
+                  <div class="delivery-option__desc">3–5 business days via courier</div>
+                </div>
+                <span class="delivery-option__price">R${CONFIG && CONFIG.DELIVERY_FEES ? CONFIG.DELIVERY_FEES.standard : 85}</span>
+              </label>
+              <label class="delivery-option" data-key="express">
+                <input type="radio" name="delivery" value="express" />
+                <div class="delivery-option__label">
+                  <div class="delivery-option__name">Express Delivery</div>
+                  <div class="delivery-option__desc">1–2 business days, priority handling</div>
+                </div>
+                <span class="delivery-option__price">R${CONFIG && CONFIG.DELIVERY_FEES ? CONFIG.DELIVERY_FEES.express : 149}</span>
+              </label>
+              <label class="delivery-option" data-key="collection">
+                <input type="radio" name="delivery" value="collection" />
+                <div class="delivery-option__label">
+                  <div class="delivery-option__name">Collection Point</div>
+                  <div class="delivery-option__desc">Pick up at a partner collection point</div>
+                </div>
+                <span class="delivery-option__price">FREE</span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Order Summary -->
+      <aside>
+        <div class="cart-summary" style="position:sticky;top:calc(var(--nav-h) + 1.5rem);">
+          <h3>Order Summary</h3>
+          <div id="summaryItems"></div>
+          <hr class="divider" />
+          <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">R0</span></div>
+          <div class="summary-row"><span>Delivery</span><span id="summaryDelivery">R85</span></div>
+          <hr class="divider" />
+          <div class="summary-row summary-row--total"><span>Total</span><span id="summaryTotal">R0</span></div>
+          <button type="button" id="proceedBtn" class="btn btn--primary btn--full btn--lg" style="margin-top:1.25rem;"
+                  onclick="proceedToPayment()">Proceed to Payment →</button>
+          <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin-top:.75rem;">
+            🔒 Your information is secure and protected.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span><span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  const FEES = CONFIG.DELIVERY_FEES;
+  let selectedDelivery = 'standard';
+
+  // Check cart
+  const cartItems = Cart.getCart();
+  if (cartItems.length === 0) {
+    document.getElementById('emptyCartMsg').style.display = 'block';
+    document.getElementById('checkoutLayout').style.display = 'none';
+  }
+
+  function getDeliveryCost() {
+    return FEES[selectedDelivery] ?? 0;
+  }
+
+  function updateSummary() {
+    const subtotal = Cart.getCartTotal();
+    const delivery = getDeliveryCost();
+    const total    = subtotal + delivery;
+
+    document.getElementById('summaryItems').innerHTML = cartItems.map(i => `
+      <div class="summary-row" style="font-size:.88rem;">
+        <span>${i.name} × ${i.qty}</span>
+        <span>R${(i.price * i.qty).toLocaleString('en-ZA')}</span>
+      </div>`).join('');
+
+    document.getElementById('summarySubtotal').textContent = `R${subtotal.toLocaleString('en-ZA')}`;
+    document.getElementById('summaryDelivery').textContent = delivery === 0 ? 'FREE' : `R${delivery.toLocaleString('en-ZA')}`;
+    document.getElementById('summaryTotal').textContent    = `R${total.toLocaleString('en-ZA')}`;
+  }
+
+  // Delivery option selection
+  document.querySelectorAll('.delivery-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      selectedDelivery = opt.querySelector('input').value;
+      updateSummary();
+    });
+  });
+
+  // Update delivery option price placeholders
+  document.querySelectorAll('.delivery-option').forEach(opt => {
+    const key = opt.dataset.key;
+    const priceEl = opt.querySelector('.delivery-option__price');
+    if (key && FEES[key] !== undefined) {
+      priceEl.textContent = FEES[key] === 0 ? 'FREE' : `R${FEES[key]}`;
+    }
+  });
+
+  // Validation
+  function validate() {
+    let ok = true;
+    const required = ['fullName', 'email', 'phone', 'address', 'city', 'province', 'postal'];
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      const grp = el.closest('.form-group');
+      const isEmpty = !el.value.trim();
+      grp.classList.toggle('has-error', isEmpty);
+      if (isEmpty) ok = false;
+    });
+
+    // Email format
+    const em = document.getElementById('email');
+    if (em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) {
+      em.closest('.form-group').classList.add('has-error'); ok = false;
+    }
+
+    // Postal code (4 digits)
+    const pc = document.getElementById('postal');
+    if (pc.value && !/^\d{4}$/.test(pc.value.trim())) {
+      pc.closest('.form-group').classList.add('has-error'); ok = false;
+    }
+
+    return ok;
+  }
+
+  function proceedToPayment() {
+    if (!validate()) {
+      Notifications.error('Please fill in all required fields correctly.');
+      document.querySelector('.has-error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
+    // Save customer data + delivery
+    const customerData = {
+      name:     document.getElementById('fullName').value.trim(),
+      email:    document.getElementById('email').value.trim(),
+      phone:    document.getElementById('phone').value.trim(),
+      address:  document.getElementById('address').value.trim(),
+      city:     document.getElementById('city').value.trim(),
+      province: document.getElementById('province').value,
+      postal:   document.getElementById('postal').value.trim(),
+    };
+
+    const deliveryCost = getDeliveryCost();
+    const deliveryMethod = {
+      standard:   'Standard Delivery',
+      express:    'Express Delivery',
+      collection: 'Collection Point',
+    }[selectedDelivery];
+
+    // Build and save pending order
+    const order = Checkout.buildOrder(customerData, deliveryMethod, cartItems, deliveryCost);
+    sessionStorage.setItem('tpr_pending_order', JSON.stringify(order));
+
+    window.location.href = 'payment.html';
+  }
+
+  updateSummary();
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Plug Retailor – South Africa's home for premium local brands, new and pre-loved. Shop proudly South African fashion and accessories." />
+  <title>The Plug Retailor | Proudly South African Marketplace</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">THE PLUG RETAILOR</p>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="The Plug Retailor Home">
+      THE PLUG RETAILOR
+      <span>Proudly South African</span>
+    </a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">☰</button>
+    <ul class="nav__menu" id="navMenu" role="list">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode" aria-pressed="false">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">
+        🛒
+        <span class="cart-badge" aria-label="Cart items">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="container">
+    <div class="hero__content">
+      <div class="hero__badge">🇿🇦 100% South African Brands</div>
+      <h1 id="heroTitle">THE PLUG<br><span class="accent">RETAILOR</span></h1>
+      <p class="hero__tagline">South Africa's home for premium local brands – new and pre-loved.</p>
+      <p class="hero__desc">
+        The Plug Retailor is a proudly South African online marketplace dedicated exclusively to South African brands.
+        Whether you're looking for brand-new fashion or quality pre-loved items, we connect shoppers with authentic local
+        products while supporting sustainability and South African businesses.
+      </p>
+      <div class="hero__btns">
+        <a href="products.html?type=new" class="btn btn--gold btn--lg">🛍 Shop New</a>
+        <a href="products.html?type=preloved" class="btn btn--outline-gold btn--lg">♻ Shop Pre-Loved</a>
+      </div>
+    </div>
+
+    <!-- Shop Type Cards -->
+    <div class="hero__cards">
+      <a href="products.html?type=new" class="hero__card">
+        <div class="hero__card-icon">✨</div>
+        <h3>NEW PRODUCTS</h3>
+        <p>Fresh off the shelf, 100% authentic South African brands delivered to your door.</p>
+        <span class="btn btn--gold btn--sm">Shop New</span>
+      </a>
+      <a href="products.html?type=preloved" class="hero__card">
+        <div class="hero__card-icon">♻️</div>
+        <h3>PRE-LOVED ITEMS</h3>
+        <p>Quality second-hand SA fashion. Sustainable shopping that gives clothes a second life.</p>
+        <span class="btn btn--outline-gold btn--sm">Shop Pre-Loved</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats" aria-label="Store statistics">
+  <div class="container">
+    <div class="stats__inner">
+      <div class="stats__item"><div class="stats__num">500+</div><div class="stats__label">Products Listed</div></div>
+      <div class="stats__item"><div class="stats__num">6</div><div class="stats__label">SA Brands</div></div>
+      <div class="stats__item"><div class="stats__num">100%</div><div class="stats__label">Local Brands</div></div>
+      <div class="stats__item"><div class="stats__num">9</div><div class="stats__label">Provinces Served</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Products -->
+<section class="section" aria-labelledby="featuredTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="featuredTitle">Featured Products</h2>
+      <p>Handpicked favourites from our proudly South African brands.</p>
+      <div class="underline"></div>
+    </div>
+    <div class="tab-group" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="all">All</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-tab="new">New</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-tab="preloved">Pre-Loved</button>
+    </div>
+    <div class="products-grid" id="featuredGrid"></div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="products.html" class="btn btn--outline">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Shop Local -->
+<section class="section section--alt" aria-labelledby="whyTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="whyTitle">Why Shop Local?</h2>
+      <p>Every purchase at The Plug Retailor makes a real difference to South African communities.</p>
+      <div class="underline"></div>
+    </div>
+    <div class="why-cards">
+      <div class="why-card">
+        <div class="why-card__icon">🇿🇦</div>
+        <h3>Support SA Businesses</h3>
+        <p>Every rand you spend stays in South Africa, empowering local entrepreneurs and creating jobs.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card__icon">♻️</div>
+        <h3>Sustainable Shopping</h3>
+        <p>Pre-loved items extend the life of quality products, reducing waste and your carbon footprint.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card__icon">✅</div>
+        <h3>Authentic Products</h3>
+        <p>Every item is from a verified South African brand. No imports, no knock-offs — just the real deal.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card__icon">🚀</div>
+        <h3>Fast Local Delivery</h3>
+        <p>Delivered from SA warehouses, faster than international shipping with lower delivery costs.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card__icon">💬</div>
+        <h3>Dedicated Support</h3>
+        <p>Chat with us directly on WhatsApp. Real people, real answers — no bots, no call centres.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-card__icon">🌍</div>
+        <h3>Community First</h3>
+        <p>We reinvest in township creative businesses and emerging SA designers you won't find elsewhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Brands -->
+<section class="section" aria-labelledby="brandsTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="brandsTitle">Featured South African Brands</h2>
+      <p>Meet the local brands powering The Plug Retailor.</p>
+      <div class="underline"></div>
+    </div>
+    <div class="brands-grid" id="brandsGrid"></div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section section--alt" aria-labelledby="testiTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="testiTitle">What Our Customers Say</h2>
+      <p>Real reviews from real South Africans.</p>
+      <div class="underline"></div>
+    </div>
+    <div class="testimonials-grid" id="testimonialsGrid"></div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter" aria-label="Newsletter subscription">
+  <div class="container">
+    <h2>Stay in the Loop 🔔</h2>
+    <p>Get new arrivals, exclusive deals and SA brand spotlights straight to your inbox.</p>
+    <form class="newsletter-form" novalidate>
+      <input type="email" placeholder="Enter your email address" required aria-label="Email address" />
+      <button type="submit" class="btn btn--gold">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ Preview -->
+<section class="section" aria-labelledby="faqTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="faqTitle">Frequently Asked Questions</h2>
+      <div class="underline"></div>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="contact.html" class="btn btn--outline">Got More Questions? Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Preview -->
+<section class="section section--alt" aria-labelledby="aboutTitle">
+  <div class="container" style="max-width:820px; text-align:center;">
+    <div class="section-title">
+      <h2 id="aboutTitle">About The Plug Retailor</h2>
+      <div class="underline"></div>
+    </div>
+    <p style="color:var(--text-muted); font-size:1.05rem; line-height:1.8; margin-bottom:1.5rem;">
+      The Plug Retailor was born from a simple belief: South African brands deserve a dedicated platform.
+      We're more than a shop — we're a movement to support local talent, champion sustainable fashion,
+      and connect South Africans with the incredible products being made right here at home.
+      From the streets of Soweto to the beaches of Cape Town, our brands represent the full spectrum
+      of Mzansi's creative brilliance.
+    </p>
+    <div style="display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap;">
+      <span class="chip chip--green">🇿🇦 Proudly South African</span>
+      <span class="chip chip--gold">♻️ Sustainable</span>
+      <span class="chip chip--green">✅ Quality Verified</span>
+      <span class="chip chip--gold">💬 WhatsApp Support</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved. Supporting local businesses, one purchase at a time.</p>
+        <div class="footer__flag">
+          <span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="products.html?type=new">New Products</a></li>
+          <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="cart.html">My Cart</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+          <li><a href="returns.html">Returns & Refunds</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#" target="_blank" rel="noopener">TikTok</a></li>
+          <li><a href="#" target="_blank" rel="noopener">X (Twitter)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor. All rights reserved.</span>
+      <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
+        <a href="returns.html">Returns</a>
+        <span class="popia-badge">POPIA Compliant</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span>
+  <span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+
+<!-- Back to Top -->
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Scripts -->
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/script.js"></script>
+<script>
+  // Set WhatsApp link
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+
+  // Footer year
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // Mark active nav link
+  document.querySelectorAll('.nav__menu a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === 'index.html');
+  });
+
+  // Render featured products
+  const featured = PRODUCTS.filter(p => p.popular).slice(0, 8);
+  let currentTab = 'all';
+  const grid = document.getElementById('featuredGrid');
+
+  function renderFeatured(tab) {
+    currentTab = tab;
+    const filtered = tab === 'all' ? featured
+      : tab === 'new'     ? featured.filter(p => p.condition === 'new')
+      : featured.filter(p => p.condition === 'pre-loved');
+    grid.innerHTML = filtered.length
+      ? filtered.map(p => buildProductCard(p)).join('')
+      : '<p class="no-results">No featured products in this category.</p>';
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      renderFeatured(btn.dataset.tab);
+    });
+  });
+  renderFeatured('all');
+
+  // Render brands
+  document.getElementById('brandsGrid').innerHTML = BRANDS.map(b => `
+    <div class="brand-card">
+      <div class="brand-card__icon">${b.icon}</div>
+      <div class="brand-card__name">${b.name}</div>
+      <div class="brand-card__tag">${b.tagline}</div>
+    </div>`).join('');
+
+  // Render testimonials
+  const testimonials = [
+    { name:'Thandi M.',   loc:'Johannesburg',  text:'Finally a marketplace that only stocks SA brands! I bought a hoodie from Ubuntu Threads and the quality is amazing. Will definitely be back.', stars:5, init:'T' },
+    { name:'Sipho K.',    loc:'Cape Town',      text:'Got a pre-loved Kasi Kulture cap in excellent condition for half the price. The condition rating system is spot on — no surprises.', stars:5, init:'S' },
+    { name:'Lerato P.',   loc:'Durban',         text:'Love the concept. Supporting local has never been this easy. The WhatsApp support team is super helpful and responsive.', stars:5, init:'L' },
+    { name:'Ruan V.',     loc:'Pretoria',       text:'Ordered the Karoo Chronograph watch — absolutely stunning. Didn\'t know we had such quality timepieces being made locally!', stars:5, init:'R' },
+    { name:'Nomsa D.',    loc:'Soweto',         text:'The pre-loved section is fantastic! Bought three items in one order and they all arrived exactly as described. No dodgy surprises.', stars:5, init:'N' },
+    { name:'Caleb O.',    loc:'Port Elizabeth', text:'Fast delivery, great packaging, and amazing local brands. This is exactly what SA e-commerce should look like. Proud to shop here.', stars:5, init:'C' },
+  ];
+
+  document.getElementById('testimonialsGrid').innerHTML = testimonials.map(t => `
+    <div class="testimonial-card">
+      <div class="stars">${'★'.repeat(t.stars)}</div>
+      <p class="testimonial-card__text">"${t.text}"</p>
+      <div class="testimonial-card__author">
+        <div class="testimonial-card__avatar">${t.init}</div>
+        <div>
+          <div class="testimonial-card__name">${t.name}</div>
+          <div class="testimonial-card__loc">📍 ${t.loc}</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Render FAQs
+  const faqs = [
+    { q:'Are all products genuinely South African?', a:'Yes! Every single product on The Plug Retailor comes from a verified South African brand. We do not stock any international imports.' },
+    { q:'How does the pre-loved condition rating work?', a:'We use four ratings: <strong>Like New</strong> (barely used, no signs of wear), <strong>Excellent</strong> (minor signs of use), <strong>Good</strong> (normal wear), and <strong>Fair</strong> (noticeable wear, still functional).' },
+    { q:'Can I return a pre-loved item?', a:'Yes. If the item differs materially from its listed condition, you can return it within 7 days. See our <a href="returns.html" class="chip chip--green" style="text-decoration:underline">Returns Policy</a> for full details.' },
+    { q:'How do I track my order?', a:'After placing your order you will receive an order number. Contact us via WhatsApp or email with your order number and we will provide tracking information.' },
+    { q:'Do you deliver nationwide?', a:'Yes, we deliver to all 9 provinces. Standard and Express delivery options are available at checkout.' },
+  ];
+
+  document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+    <div class="faq-item" id="faq${i}">
+      <button class="faq-item__q" aria-expanded="false" aria-controls="faqA${i}" onclick="toggleFaq(${i})">
+        <span>${f.q}</span><span class="icon">+</span>
+      </button>
+      <div class="faq-item__a" id="faqA${i}" role="region">
+        <div class="faq-item__a-inner">${f.a}</div>
+      </div>
+    </div>`).join('');
+
+  function toggleFaq(i) {
+    const item = document.getElementById(`faq${i}`);
+    const open = item.classList.toggle('open');
+    item.querySelector('.faq-item__q').setAttribute('aria-expanded', open);
+  }
+</script>
+</body>
+</html>

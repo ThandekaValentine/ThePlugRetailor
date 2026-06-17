@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Secure payment – The Plug Retailor. Complete your order safely." />
+  <title>Payment | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+  <!-- EmailJS SDK (used for order notification emails) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Secure Checkout</p>
+</div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Payment</h1>
+    <p>Complete your purchase safely and securely.</p>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Checkout steps">
+      <a href="cart.html">Cart</a>
+      <span class="sep">›</span>
+      <a href="checkout.html">Checkout</a>
+      <span class="sep">›</span>
+      <strong>Payment</strong>
+    </nav>
+
+    <!-- No pending order -->
+    <div id="noOrderMsg" style="display:none;" class="cart-empty">
+      <div class="icon">⚠️</div>
+      <h3>No order in progress</h3>
+      <p>Please complete checkout before proceeding to payment.</p>
+      <a href="checkout.html" class="btn btn--primary" style="margin-top:1rem">Go to Checkout</a>
+    </div>
+
+    <!-- Payment Form -->
+    <div id="paymentLayout" class="checkout-layout">
+      <div>
+        <div class="form-card">
+          <div class="secure-badge">🔒 Secure Checkout — Your payment details are encrypted</div>
+          <h2>💳 Select Payment Method</h2>
+
+          <div class="payment-methods" id="paymentMethods" role="radiogroup" aria-label="Payment methods">
+            <div class="payment-method selected" data-method="card">
+              <div class="icon">💳</div><span>Credit/Debit Card</span>
+            </div>
+            <div class="payment-method" data-method="eft">
+              <div class="icon">🏦</div><span>EFT</span>
+            </div>
+            <div class="payment-method" data-method="instant-eft">
+              <div class="icon">⚡</div><span>Instant EFT</span>
+            </div>
+            <div class="payment-method" data-method="wallet">
+              <div class="icon">📱</div><span>Mobile Wallet</span>
+            </div>
+          </div>
+
+          <!-- Card Fields -->
+          <div id="cardFields">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="cardName">Cardholder Name *</label>
+                <input type="text" id="cardName" placeholder="Name as it appears on card" autocomplete="cc-name" />
+                <span class="form-error">Please enter the cardholder name.</span>
+              </div>
+              <div class="form-group full">
+                <label for="cardNumber">Card Number *</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" />
+                <span class="form-error">Please enter a valid 16-digit card number.</span>
+              </div>
+              <div class="form-group">
+                <label for="cardExpiry">Expiry Date *</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp" />
+                <span class="form-error">Please enter a valid expiry date.</span>
+              </div>
+              <div class="form-group">
+                <label for="cardCvv">CVV *</label>
+                <input type="text" id="cardCvv" placeholder="123" maxlength="4" autocomplete="cc-csc" />
+                <span class="form-error">Please enter a valid CVV.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- EFT placeholder -->
+          <div id="eftFields" style="display:none;">
+            <p style="color:var(--text-muted); font-size:.9rem; background:var(--surface-2); padding:1rem; border-radius:var(--radius-sm);">
+              🏦 You will be redirected to your bank's secure EFT portal to complete this payment after placing your order.
+            </p>
+          </div>
+
+          <!-- Mobile wallet placeholder -->
+          <div id="walletFields" style="display:none;">
+            <p style="color:var(--text-muted); font-size:.9rem; background:var(--surface-2); padding:1rem; border-radius:var(--radius-sm);">
+              📱 You will receive a payment prompt on your mobile wallet app to approve this transaction.
+            </p>
+          </div>
+
+          <p style="font-size:.78rem; color:var(--text-muted); margin-top:1.25rem;">
+            This is a demo storefront. No real payment will be processed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <aside>
+        <div class="cart-summary" style="position:sticky;top:calc(var(--nav-h) + 1.5rem);">
+          <h3>Order Summary</h3>
+          <div id="paySummaryItems"></div>
+          <hr class="divider" />
+          <div class="summary-row"><span>Subtotal</span><span id="paySubtotal">R0</span></div>
+          <div class="summary-row"><span id="payDeliveryLabel">Delivery</span><span id="payDelivery">R0</span></div>
+          <hr class="divider" />
+          <div class="summary-row summary-row--total"><span>Total</span><span id="payTotal">R0</span></div>
+          <button type="button" id="placeOrderBtn" class="btn btn--red btn--full btn--lg" style="margin-top:1.25rem;" onclick="placeOrder()">
+            🔒 Place Order
+          </button>
+          <p style="font-size:.78rem;color:var(--text-muted);text-align:center;margin-top:.75rem;">
+            By placing your order you agree to our <a href="terms.html" style="color:var(--green)">Terms</a> &amp; <a href="privacy.html" style="color:var(--green)">Privacy Policy</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Order Success (hidden by default) -->
+    <div id="orderSuccess" class="order-success" style="display:none;">
+      <div class="order-success__check">✓</div>
+      <h2>Order Placed Successfully!</h2>
+      <p>Thank you for your order. We have received your purchase and the store owner has been notified.</p>
+      <div class="order-number" id="orderNumberDisplay">TP000000</div>
+      <p style="font-size:.85rem;">A confirmation has been sent to your email address.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; margin-top:2rem; flex-wrap:wrap;">
+        <a href="products.html" class="btn btn--primary">Continue Shopping</a>
+        <a href="contact.html" class="btn btn--outline">Need Help?</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span><span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  const pendingOrder = JSON.parse(sessionStorage.getItem('tpr_pending_order') || 'null');
+
+  if (!pendingOrder) {
+    document.getElementById('noOrderMsg').style.display = 'block';
+    document.getElementById('paymentLayout').style.display = 'none';
+  } else {
+    // Populate summary
+    document.getElementById('paySummaryItems').innerHTML = pendingOrder.items.map(i => `
+      <div class="summary-row" style="font-size:.88rem;">
+        <span>${i.name} × ${i.qty}</span>
+        <span>R${(i.price * i.qty).toLocaleString('en-ZA')}</span>
+      </div>`).join('');
+    document.getElementById('paySubtotal').textContent = `R${pendingOrder.subtotal.toLocaleString('en-ZA')}`;
+    document.getElementById('payDeliveryLabel').textContent = `Delivery (${pendingOrder.delivery.method})`;
+    document.getElementById('payDelivery').textContent = pendingOrder.delivery.cost === 0 ? 'FREE' : `R${pendingOrder.delivery.cost.toLocaleString('en-ZA')}`;
+    document.getElementById('payTotal').textContent = `R${pendingOrder.total.toLocaleString('en-ZA')}`;
+  }
+
+  // Payment method switching
+  let selectedMethod = 'card';
+  document.querySelectorAll('.payment-method').forEach(pm => {
+    pm.addEventListener('click', () => {
+      document.querySelectorAll('.payment-method').forEach(p => p.classList.remove('selected'));
+      pm.classList.add('selected');
+      selectedMethod = pm.dataset.method;
+
+      document.getElementById('cardFields').style.display   = selectedMethod === 'card' ? '' : 'none';
+      document.getElementById('eftFields').style.display     = (selectedMethod === 'eft' || selectedMethod === 'instant-eft') ? '' : 'none';
+      document.getElementById('walletFields').style.display  = selectedMethod === 'wallet' ? '' : 'none';
+    });
+  });
+
+  // Card number formatting
+  document.getElementById('cardNumber').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+    e.target.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+  });
+  document.getElementById('cardExpiry').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+    e.target.value = v;
+  });
+  document.getElementById('cardCvv').addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+  });
+
+  function validatePayment() {
+    if (selectedMethod !== 'card') return true; // EFT/wallet are placeholder flows
+    let ok = true;
+    const name = document.getElementById('cardName');
+    const num  = document.getElementById('cardNumber');
+    const exp  = document.getElementById('cardExpiry');
+    const cvv  = document.getElementById('cardCvv');
+
+    const checks = [
+      [name, !!name.value.trim()],
+      [num,  num.value.replace(/\s/g,'').length === 16],
+      [exp,  /^\d{2}\/\d{2}$/.test(exp.value)],
+      [cvv,  cvv.value.length >= 3],
+    ];
+
+    checks.forEach(([el, valid]) => {
+      el.closest('.form-group').classList.toggle('has-error', !valid);
+      if (!valid) ok = false;
+    });
+
+    return ok;
+  }
+
+  async function placeOrder() {
+    if (!pendingOrder) return;
+    if (!validatePayment()) {
+      Notifications.error('Please check your payment details.');
+      return;
+    }
+
+    const btn = document.getElementById('placeOrderBtn');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+
+    // Simulate processing delay
+    await new Promise(r => setTimeout(r, 1200));
+
+    // Save order + send email notification
+    Checkout.saveOrder(pendingOrder);
+    await Checkout.sendOrderEmail(pendingOrder);
+
+    // Clear cart & pending order
+    Cart.clearCart();
+    sessionStorage.removeItem('tpr_pending_order');
+
+    // Show success
+    document.getElementById('paymentLayout').style.display = 'none';
+    document.getElementById('orderSuccess').style.display = 'block';
+    document.getElementById('orderNumberDisplay').textContent = pendingOrder.orderNumber;
+    document.querySelector('.breadcrumb').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

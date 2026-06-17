@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Get in touch with The Plug Retailor — South Africa's home for premium local brands." />
+  <title>Contact Us | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Loading…</p>
+</div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Get In Touch</h1>
+    <p>We'd love to hear from you. Reach out with any questions.</p>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Contact Info -->
+      <div>
+        <h2 style="margin-bottom:1.5rem;">Contact Information</h2>
+
+        <div class="contact-info__item">
+          <div class="contact-info__icon">📞</div>
+          <div>
+            <div class="contact-info__label">Phone</div>
+            <div class="contact-info__value" id="storePhone">+27 XX XXX XXXX</div>
+          </div>
+        </div>
+
+        <div class="contact-info__item">
+          <div class="contact-info__icon">✉️</div>
+          <div>
+            <div class="contact-info__label">Email</div>
+            <div class="contact-info__value" id="storeEmail">info@theplugretailor.co.za</div>
+          </div>
+        </div>
+
+        <div class="contact-info__item">
+          <div class="contact-info__icon">📍</div>
+          <div>
+            <div class="contact-info__label">Address</div>
+            <div class="contact-info__value" id="storeAddress">Johannesburg, Gauteng, South Africa</div>
+          </div>
+        </div>
+
+        <div class="contact-info__item">
+          <div class="contact-info__icon">💬</div>
+          <div>
+            <div class="contact-info__label">WhatsApp Support</div>
+            <div class="contact-info__value">Chat with us instantly via the WhatsApp button</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2rem;margin-bottom:.75rem;">Follow Us</h3>
+        <div class="social-links">
+          <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">📘</a>
+          <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">🎵</a>
+          <a href="#" target="_blank" rel="noopener" class="social-link" aria-label="X (Twitter)">✖️</a>
+        </div>
+
+        <div class="map-embed">
+          <iframe
+            id="mapEmbed"
+            src="https://maps.google.com/maps?q=Johannesburg,+Gauteng,+South+Africa&output=embed"
+            title="The Plug Retailor location map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div>
+        <div class="form-card">
+          <h2>Send Us a Message</h2>
+          <form id="contactForm" novalidate>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="cName">Name *</label>
+                <input type="text" id="cName" placeholder="Your full name" required />
+                <span class="form-error">Please enter your name.</span>
+              </div>
+              <div class="form-group full">
+                <label for="cEmail">Email *</label>
+                <input type="email" id="cEmail" placeholder="your@email.com" required />
+                <span class="form-error">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group full">
+                <label for="cMessage">Message *</label>
+                <textarea id="cMessage" rows="5" placeholder="How can we help you?" required></textarea>
+                <span class="form-error">Please enter your message.</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full btn--lg" style="margin-top:1rem;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FAQ Section -->
+<section class="section section--alt" id="faq" aria-labelledby="faqPageTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="faqPageTitle">Frequently Asked Questions</h2>
+      <div class="underline"></div>
+    </div>
+    <div class="faq-list" id="faqListPage"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns &amp; Refunds</a></li>
+        <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">X (Twitter)</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span><span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+  document.getElementById('storePhone').textContent   = CONFIG.STORE_PHONE;
+  document.getElementById('storeEmail').textContent    = CONFIG.STORE_EMAIL;
+  document.getElementById('storeAddress').textContent  = CONFIG.STORE_ADDRESS;
+  document.getElementById('mapEmbed').src = CONFIG.MAPS_EMBED_URL;
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    let ok = true;
+    [['cName',''],['cEmail',''],['cMessage','']].forEach(([id]) => {
+      const el = document.getElementById(id);
+      const empty = !el.value.trim();
+      el.closest('.form-group').classList.toggle('has-error', empty);
+      if (empty) ok = false;
+    });
+    const email = document.getElementById('cEmail');
+    if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.closest('.form-group').classList.add('has-error'); ok = false;
+    }
+    if (!ok) { Notifications.error('Please fill in all fields correctly.'); return; }
+
+    // Store message locally (no backend available)
+    const messages = JSON.parse(localStorage.getItem('tpr_contact_messages') || '[]');
+    messages.push({
+      name: document.getElementById('cName').value.trim(),
+      email: document.getElementById('cEmail').value.trim(),
+      message: document.getElementById('cMessage').value.trim(),
+      date: new Date().toISOString(),
+    });
+    localStorage.setItem('tpr_contact_messages', JSON.stringify(messages));
+
+    Notifications.success('Message sent! We\'ll get back to you within 24 hours.');
+    document.getElementById('contactForm').reset();
+  });
+
+  // FAQ
+  const faqs = [
+    { q:'Are all products genuinely South African?', a:'Yes! Every product on The Plug Retailor comes from a verified South African brand — no international imports.' },
+    { q:'How does the pre-loved condition rating work?', a:'We rate pre-loved items as Like New, Excellent, Good, or Fair based on a thorough quality check before listing.' },
+    { q:'What payment methods do you accept?', a:'We accept Credit/Debit Card, EFT, Instant EFT and Mobile Wallet payments.' },
+    { q:'Can I return a pre-loved item?', a:'Yes — see our Returns & Refund Policy for full details on the 7-day return window.' },
+    { q:'Do you deliver nationwide?', a:'Yes, we deliver to all 9 South African provinces via Standard or Express delivery, or you can choose a Collection Point.' },
+    { q:'How do I track my order?', a:'You\'ll receive an order number after checkout. Contact us via WhatsApp or email with this number for tracking updates.' },
+  ];
+  document.getElementById('faqListPage').innerHTML = faqs.map((f,i) => `
+    <div class="faq-item" id="cfaq${i}">
+      <button class="faq-item__q" aria-expanded="false" onclick="toggleCFaq(${i})">
+        <span>${f.q}</span><span class="icon">+</span>
+      </button>
+      <div class="faq-item__a" id="cfaqA${i}"><div class="faq-item__a-inner">${f.a}</div></div>
+    </div>`).join('');
+
+  function toggleCFaq(i) {
+    const item = document.getElementById(`cfaq${i}`);
+    const open = item.classList.toggle('open');
+    item.querySelector('.faq-item__q').setAttribute('aria-expanded', open);
+  }
+</script>
+</body>
+</html>

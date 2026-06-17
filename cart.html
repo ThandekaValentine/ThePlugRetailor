@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your shopping cart at The Plug Retailor." />
+  <title>My Cart | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Loading Cart…</p>
+</div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn active" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>My Cart</h1>
+    <p>Review your selected items before checkout.</p>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">›</span>
+      <a href="products.html">Shop</a>
+      <span class="sep">›</span>
+      <span>Cart</span>
+    </nav>
+
+    <!-- Cart content injected here -->
+    <div id="cartContent"></div>
+
+  </div>
+</main>
+
+<!-- You may also like -->
+<section class="section section--alt" aria-labelledby="suggestTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="suggestTitle">You May Also Like</h2>
+      <div class="underline"></div>
+    </div>
+    <div class="products-grid" id="suggestGrid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">X (Twitter)</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span>
+  <span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  const DELIVERY_STD = CONFIG.DELIVERY_FEES.standard;
+
+  function renderCart() {
+    const items   = Cart.getCart();
+    const content = document.getElementById('cartContent');
+
+    if (items.length === 0) {
+      content.innerHTML = `
+        <div class="cart-empty">
+          <div class="icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Looks like you haven't added anything yet. Explore our South African brands below.</p>
+          <a href="products.html" class="btn btn--primary" style="margin-top:1.5rem">Start Shopping</a>
+        </div>`;
+      return;
+    }
+
+    const subtotal = Cart.getCartTotal();
+    const delivery = DELIVERY_STD;
+    const total    = subtotal + delivery;
+
+    const rows = items.map(item => `
+      <tr class="cart-row" data-id="${item.id}">
+        <td>
+          <div class="cart-product">
+            <img class="cart-product__img"
+                 src="${item.image}"
+                 alt="${item.name}"
+                 onerror="this.src='https://placehold.co/70x70/007749/FFB612?text=TPR'" />
+            <div>
+              <div class="cart-product__brand">${item.brand}</div>
+              <div class="cart-product__name">${item.name}</div>
+              <div class="cart-product__cond">${item.condition === 'new' ? '🆕 New' : `♻️ Pre-Loved${item.condRating ? ' · ' + item.condRating : ''}`}</div>
+            </div>
+          </div>
+        </td>
+        <td>R${item.price.toLocaleString('en-ZA')}</td>
+        <td>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty('${item.id}', ${item.qty - 1})" aria-label="Decrease quantity">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${item.id}', ${item.qty + 1})" aria-label="Increase quantity">+</button>
+          </div>
+        </td>
+        <td><strong>R${(item.price * item.qty).toLocaleString('en-ZA')}</strong></td>
+        <td><button class="cart-remove" onclick="removeItem('${item.id}')" aria-label="Remove ${item.name}">Remove</button></td>
+      </tr>`).join('');
+
+    content.innerHTML = `
+      <div class="cart-layout">
+        <div>
+          <table class="cart-table" aria-label="Cart items">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="cartTableBody">${rows}</tbody>
+          </table>
+          <div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;">
+            <a href="products.html" class="btn btn--outline">← Continue Shopping</a>
+            <button class="btn btn--ghost" onclick="clearAllItems()">🗑 Clear Cart</button>
+          </div>
+        </div>
+
+        <aside class="cart-summary" aria-label="Order summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><span>Subtotal (${Cart.getCartCount()} items)</span><span>R${subtotal.toLocaleString('en-ZA')}</span></div>
+          <div class="summary-row"><span>Estimated Delivery</span><span>R${delivery.toLocaleString('en-ZA')}</span></div>
+          <hr class="divider" />
+          <div class="summary-row summary-row--total"><span>Total</span><span>R${total.toLocaleString('en-ZA')}</span></div>
+          <p style="font-size:.78rem;color:var(--text-muted);margin:.75rem 0 1.25rem;">
+            Delivery estimate for Standard Delivery. Final cost confirmed at checkout.
+          </p>
+          <a href="checkout.html" class="btn btn--primary btn--full btn--lg">Proceed to Checkout →</a>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-top:1rem;font-size:.8rem;color:var(--text-muted);justify-content:center;">
+            🔒 Secure checkout &nbsp;|&nbsp; 🇿🇦 SA brands only
+          </div>
+        </aside>
+      </div>`;
+  }
+
+  function changeQty(id, qty) {
+    Cart.updateQty(id, qty);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    const item = Cart.getCart().find(i => i.id === id);
+    Cart.removeFromCart(id);
+    if (item) Notifications.info(`"${item.name}" removed from cart.`);
+    renderCart();
+  }
+
+  function clearAllItems() {
+    if (!confirm('Remove all items from your cart?')) return;
+    Cart.clearCart();
+    renderCart();
+  }
+
+  // Suggestions
+  const cartIds = Cart.getCart().map(i => i.id);
+  const suggestions = PRODUCTS.filter(p => !cartIds.includes(p.id) && p.popular).slice(0, 4);
+  document.getElementById('suggestGrid').innerHTML = suggestions.map(p => buildProductCard(p)).join('');
+
+  renderCart();
+</script>
+</body>
+</html>

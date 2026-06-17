@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shop all South African brands – new and pre-loved clothing, shoes, accessories and more at The Plug Retailor." />
+  <title>Shop All Products | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Loading Shop…</p>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Shop</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="container">
+    <h1>Shop South African Brands</h1>
+    <p>New products &amp; quality pre-loved items — 100% local, 100% authentic.</p>
+  </div>
+</header>
+
+<!-- Toolbar -->
+<div class="products-toolbar" role="search">
+  <div class="container">
+    <div class="products-toolbar__inner">
+      <div class="toolbar-search">
+        <span class="icon">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search products, brands…" aria-label="Search products" />
+      </div>
+      <select class="toolbar-select" id="typeFilter" aria-label="Filter by type">
+        <option value="all">All Types</option>
+        <option value="new">New Only</option>
+        <option value="preloved">Pre-Loved Only</option>
+      </select>
+      <select class="toolbar-select" id="brandFilter" aria-label="Filter by brand">
+        <option value="all">All Brands</option>
+      </select>
+      <select class="toolbar-select" id="priceFilter" aria-label="Filter by price">
+        <option value="all">All Prices</option>
+        <option value="0-300">Under R300</option>
+        <option value="300-700">R300 – R700</option>
+        <option value="700-1500">R700 – R1 500</option>
+        <option value="1500-9999">R1 500+</option>
+      </select>
+      <select class="toolbar-select" id="sortFilter" aria-label="Sort products">
+        <option value="popular">Most Popular</option>
+        <option value="newest">Newest</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+      <span class="products-count" id="productCount" aria-live="polite">24 products</span>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="category-tabs" role="list" aria-label="Product categories">
+      <button class="category-tab active" data-cat="all" role="listitem">All</button>
+      <button class="category-tab" data-cat="shirts">Shirts</button>
+      <button class="category-tab" data-cat="caps">Caps</button>
+      <button class="category-tab" data-cat="tracksuits">Tracksuits</button>
+      <button class="category-tab" data-cat="shoes">Shoes</button>
+      <button class="category-tab" data-cat="hoodies">Hoodies</button>
+      <button class="category-tab" data-cat="jackets">Jackets</button>
+      <button class="category-tab" data-cat="jeans">Jeans</button>
+      <button class="category-tab" data-cat="accessories">Accessories</button>
+      <button class="category-tab" data-cat="watches">Watches</button>
+      <button class="category-tab" data-cat="bags">Bags</button>
+    </div>
+  </div>
+</div>
+
+<!-- Products Grid -->
+<main class="section" id="mainContent">
+  <div class="container">
+    <div class="products-grid" id="productsGrid" aria-label="Products"></div>
+    <div id="noResults" class="no-results" hidden>
+      <div class="icon">🔍</div>
+      <h3>No products found</h3>
+      <p>Try adjusting your filters or search term.</p>
+      <button class="btn btn--outline" onclick="clearFilters()" style="margin-top:1rem;">Clear Filters</button>
+    </div>
+  </div>
+</main>
+
+<!-- Recently Viewed -->
+<section class="section section--alt" id="recentSection" style="display:none;" aria-labelledby="recentTitle">
+  <div class="container">
+    <div class="section-title">
+      <h2 id="recentTitle">Recently Viewed</h2>
+      <div class="underline"></div>
+    </div>
+    <div class="products-grid" id="recentGrid"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="cart.html">My Cart</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">X (Twitter)</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span>
+  <span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // Populate brand filter
+  const brands = [...new Set(PRODUCTS.map(p => p.brand))].sort();
+  const bf = document.getElementById('brandFilter');
+  brands.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; bf.appendChild(o); });
+
+  // State
+  let activeCategory = 'all';
+  let filters = { search:'', type:'all', brand:'all', price:'all', sort:'popular' };
+
+  // Read URL params
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('type') === 'preloved') { filters.type = 'preloved'; document.getElementById('typeFilter').value = 'preloved'; }
+  if (params.get('type') === 'new')      { filters.type = 'new';      document.getElementById('typeFilter').value = 'new'; }
+
+  function applyFilters() {
+    let list = [...PRODUCTS];
+
+    // Category
+    if (activeCategory !== 'all') list = list.filter(p => p.category === activeCategory);
+
+    // Type
+    if (filters.type === 'new')      list = list.filter(p => p.condition === 'new');
+    if (filters.type === 'preloved') list = list.filter(p => p.condition === 'pre-loved');
+
+    // Brand
+    if (filters.brand !== 'all') list = list.filter(p => p.brand === filters.brand);
+
+    // Price
+    if (filters.price !== 'all') {
+      const [lo, hi] = filters.price.split('-').map(Number);
+      list = list.filter(p => p.price >= lo && p.price <= hi);
+    }
+
+    // Search
+    if (filters.search) {
+      const q = filters.search.toLowerCase();
+      list = list.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+    }
+
+    // Sort
+    if (filters.sort === 'low')     list.sort((a,b) => a.price - b.price);
+    if (filters.sort === 'high')    list.sort((a,b) => b.price - a.price);
+    if (filters.sort === 'popular') list.sort((a,b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+    if (filters.sort === 'newest')  list.sort((a,b) => b.id.localeCompare(a.id));
+
+    const grid = document.getElementById('productsGrid');
+    const none = document.getElementById('noResults');
+
+    if (list.length === 0) {
+      grid.innerHTML = '';
+      none.hidden = false;
+    } else {
+      none.hidden = true;
+      grid.innerHTML = list.map(p => buildProductCard(p)).join('');
+    }
+
+    document.getElementById('productCount').textContent = `${list.length} product${list.length !== 1 ? 's' : ''}`;
+  }
+
+  // Add recently viewed on card click
+  document.getElementById('productsGrid').addEventListener('click', e => {
+    const card = e.target.closest('.product-card');
+    if (card && !e.target.closest('button')) {
+      const p = PRODUCTS.find(x => x.id === card.dataset.id);
+      if (p) Cart.addRecentlyViewed(p);
+    }
+  });
+
+  // Category tabs
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeCategory = tab.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  // Filter controls
+  document.getElementById('searchInput').addEventListener('input', e => { filters.search = e.target.value; applyFilters(); });
+  document.getElementById('typeFilter').addEventListener('change', e => { filters.type  = e.target.value; applyFilters(); });
+  document.getElementById('brandFilter').addEventListener('change', e => { filters.brand = e.target.value; applyFilters(); });
+  document.getElementById('priceFilter').addEventListener('change', e => { filters.price = e.target.value; applyFilters(); });
+  document.getElementById('sortFilter').addEventListener('change', e => { filters.sort  = e.target.value; applyFilters(); });
+
+  function clearFilters() {
+    filters = { search:'', type:'all', brand:'all', price:'all', sort:'popular' };
+    activeCategory = 'all';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('typeFilter').value  = 'all';
+    document.getElementById('brandFilter').value = 'all';
+    document.getElementById('priceFilter').value = 'all';
+    document.getElementById('sortFilter').value  = 'popular';
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === 'all'));
+    applyFilters();
+  }
+
+  // Recently Viewed
+  function renderRecent() {
+    const recent = Cart.getRecentlyViewed().filter(p => PRODUCTS.some(x => x.id === p.id));
+    const sec = document.getElementById('recentSection');
+    if (recent.length === 0) { sec.style.display = 'none'; return; }
+    sec.style.display = '';
+    document.getElementById('recentGrid').innerHTML = recent.slice(0, 4).map(p => buildProductCard(p, true)).join('');
+  }
+
+  applyFilters();
+  renderRecent();
+</script>
+</body>
+</html>

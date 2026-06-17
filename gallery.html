@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse our gallery of South African fashion — new and pre-loved clothing, shoes, accessories and more." />
+  <title>Gallery | The Plug Retailor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23007749'/><text y='24' x='4' font-size='22'>🛍</text></svg>" />
+</head>
+<body>
+
+<div id="pageLoader" aria-hidden="true">
+  <div class="loader__spinner"></div>
+  <p class="loader__logo">Loading Gallery…</p>
+</div>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">THE PLUG RETAILOR<span>Proudly South African</span></a>
+    <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <button id="darkModeToggle" aria-label="Toggle dark mode">☾</button>
+      <a href="cart.html" class="nav__cart-btn" aria-label="Shopping cart">🛒<span class="cart-badge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Product Gallery</h1>
+    <p>Explore our curated collection of proudly South African fashion.</p>
+  </div>
+</header>
+
+<!-- Gallery Filters -->
+<div class="products-toolbar">
+  <div class="container">
+    <div class="products-toolbar__inner">
+      <div class="toolbar-search">
+        <span class="icon">🔍</span>
+        <input type="search" id="gallerySearch" placeholder="Search gallery…" aria-label="Search gallery" />
+      </div>
+      <select class="toolbar-select" id="galleryType" aria-label="Filter by type">
+        <option value="all">All Types</option>
+        <option value="new">New Only</option>
+        <option value="pre-loved">Pre-Loved Only</option>
+      </select>
+      <select class="toolbar-select" id="galleryCat" aria-label="Filter by category">
+        <option value="all">All Categories</option>
+        <option value="shirts">Shirts</option>
+        <option value="caps">Caps</option>
+        <option value="tracksuits">Tracksuits</option>
+        <option value="shoes">Shoes</option>
+        <option value="hoodies">Hoodies</option>
+        <option value="jackets">Jackets</option>
+        <option value="jeans">Jeans</option>
+        <option value="accessories">Accessories</option>
+        <option value="watches">Watches</option>
+        <option value="bags">Bags</option>
+      </select>
+      <span class="products-count" id="galleryCount" aria-live="polite">24 items</span>
+    </div>
+  </div>
+</div>
+
+<main class="section">
+  <div class="container">
+    <div class="gallery-grid" id="galleryGrid" role="list" aria-label="Product gallery"></div>
+    <div id="galleryEmpty" class="no-results" hidden>
+      <div class="icon">🖼</div>
+      <h3>No gallery items found</h3>
+      <p>Try a different filter or search term.</p>
+    </div>
+  </div>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Close lightbox">×</button>
+  <button class="lightbox__nav lightbox__prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+  <button class="lightbox__nav lightbox__next" id="lightboxNext" aria-label="Next image">›</button>
+  <div class="lightbox__caption" id="lightboxCaption"></div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">THE PLUG RETAILOR</div>
+        <div class="footer__brand-tag">Proudly South African</div>
+        <p class="footer__desc">South Africa's home for premium local brands — new and pre-loved.</p>
+        <div class="footer__flag"><span class="f1"></span><span class="f2"></span><span class="f3"></span><span class="f4"></span><span class="f5"></span></div>
+      </div>
+      <div class="footer__col"><h4>Shop</h4><ul>
+        <li><a href="products.html?type=new">New Products</a></li>
+        <li><a href="products.html?type=preloved">Pre-Loved</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="cart.html">My Cart</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="returns.html">Returns</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+      </ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">X (Twitter)</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; <span id="footerYear"></span> The Plug Retailor.</span>
+      <span class="popia-badge">POPIA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<a id="whatsappFab" href="#" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <span>💬</span>
+  <span class="whatsapp-fab__tooltip">Chat with us on WhatsApp</span>
+</a>
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script src="js/config.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('whatsappFab').href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  let galleryItems = [];
+  let lightboxIdx  = 0;
+
+  function renderGallery() {
+    const search = document.getElementById('gallerySearch').value.toLowerCase();
+    const type   = document.getElementById('galleryType').value;
+    const cat    = document.getElementById('galleryCat').value;
+
+    let list = PRODUCTS.filter(p => {
+      if (type !== 'all' && p.condition !== type) return false;
+      if (cat  !== 'all' && p.category !== cat)  return false;
+      if (search && !p.name.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search)) return false;
+      return true;
+    });
+
+    galleryItems = list;
+    const grid  = document.getElementById('galleryGrid');
+    const empty = document.getElementById('galleryEmpty');
+
+    if (list.length === 0) { grid.innerHTML = ''; empty.hidden = false; }
+    else {
+      empty.hidden = true;
+      grid.innerHTML = list.map((p, i) => `
+        <div class="gallery-item" role="listitem" data-idx="${i}" tabindex="0"
+             aria-label="${p.name} by ${p.brand}"
+             onclick="openLightbox(${i})"
+             onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(${i})">
+          <img src="${p.image}" alt="${p.name}" loading="lazy"
+               onerror="this.src='https://placehold.co/400x400/007749/FFB612?text=TPR'" />
+          <div class="gallery-item__overlay">
+            <div class="gallery-item__info">
+              <h4>${p.name}</h4>
+              <p>${p.brand} · ${p.condition === 'new' ? 'New' : 'Pre-Loved'}</p>
+              <p style="margin-top:.25rem;font-weight:700;color:var(--gold)">R${p.price.toLocaleString('en-ZA')}</p>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+
+    document.getElementById('galleryCount').textContent = `${list.length} item${list.length !== 1 ? 's' : ''}`;
+  }
+
+  // Lightbox
+  function openLightbox(idx) {
+    lightboxIdx = idx;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightbox() {
+    const p = galleryItems[lightboxIdx];
+    document.getElementById('lightboxImg').src = p.image;
+    document.getElementById('lightboxImg').alt = p.name;
+    document.getElementById('lightboxCaption').innerHTML =
+      `<strong>${p.name}</strong> · ${p.brand} · ${p.condition === 'new' ? 'New' : 'Pre-Loved'} · <strong style="color:var(--gold)">R${p.price.toLocaleString('en-ZA')}</strong>`;
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => {
+    lightboxIdx = (lightboxIdx - 1 + galleryItems.length) % galleryItems.length;
+    updateLightbox();
+  });
+  document.getElementById('lightboxNext').addEventListener('click', () => {
+    lightboxIdx = (lightboxIdx + 1) % galleryItems.length;
+    updateLightbox();
+  });
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft')  { lightboxIdx = (lightboxIdx - 1 + galleryItems.length) % galleryItems.length; updateLightbox(); }
+    if (e.key === 'ArrowRight') { lightboxIdx = (lightboxIdx + 1) % galleryItems.length; updateLightbox(); }
+  });
+
+  document.getElementById('gallerySearch').addEventListener('input', renderGallery);
+  document.getElementById('galleryType').addEventListener('change',  renderGallery);
+  document.getElementById('galleryCat').addEventListener('change',   renderGallery);
+
+  renderGallery();
+</script>
+</body>
+</html>
