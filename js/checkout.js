@@ -1,114 +1,90 @@
 /**
- * THE PLUG RETAILOR – Cart Manager
- * Handles cart & wishlist via localStorage
+ * THE PLUG RETAILOR – Checkout & Order Processing
  */
 
-const Cart = (() => {
-  const CART_KEY      = 'tpr_cart';
-  const WISHLIST_KEY  = 'tpr_wishlist';
-  const VIEWED_KEY    = 'tpr_recently_viewed';
+const Checkout = (() => {
+  const ORDER_KEY = 'tpr_last_order';
 
-  // ─── Helpers ──────────────────────────────────────────────────────────────
-  const _load  = key => JSON.parse(localStorage.getItem(key) || '[]');
-  const _save  = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+  // ─── Generate unique order number ─────────────────────────────────────────
+  function generateOrderNumber() {
+    const n = Math.floor(100000 + Math.random() * 900000);
+    return `TP${n}`;
+  }
 
-  // ─── Cart ──────────────────────────────────────────────────────────────────
-  function getCart() { return _load(CART_KEY); }
+  // ─── Save order to localStorage ───────────────────────────────────────────
+  function saveOrder(order) {
+    localStorage.setItem(ORDER_KEY, JSON.stringify(order));
+    // Also append to order history
+    const history = JSON.parse(localStorage.getItem('tpr_order_history') || '[]');
+    history.unshift(order);
+    localStorage.setItem('tpr_order_history', JSON.stringify(history.slice(0, 50)));
+  }
 
-  function addToCart(product) {
-    const cart  = getCart();
-    const idx   = cart.findIndex(i => i.id === product.id);
-    if (idx > -1) {
-      cart[idx].qty += 1;
-    } else {
-      cart.push({ ...product, qty: 1 });
+  function getLastOrder() {
+    return JSON.parse(localStorage.getItem(ORDER_KEY) || 'null');
+  }
+
+  // ─── Format order for email ────────────────────────────────────────────────
+  function formatOrderEmail(order) {
+    const itemLines = order.items.map(i =>
+      `${i.qty} x ${i.name} (${i.brand}) [${i.condition}] – R${(i.price * i.qty).toFixed(2)}`
+    ).join('\n');
+
+    return {
+      to_email:       CONFIG.STORE_OWNER_EMAIL,
+      store_name:     CONFIG.STORE_NAME,
+      order_number:   order.orderNumber,
+      order_date:     order.date,
+      // Customer
+      customer_name:  order.customer.name,
+      customer_email: order.customer.email,
+      customer_phone: order.customer.phone,
+      customer_address:`${order.customer.address}, ${order.customer.city}, ${order.customer.province}, ${order.customer.postal}`,
+      // Items
+      order_items:    itemLines,
+      // Delivery
+      delivery_method: order.delivery.method,
+      delivery_cost:  `R${order.delivery.cost.toFixed(2)}`,
+      // Totals
+      subtotal:       `R${order.subtotal.toFixed(2)}`,
+      total:          `R${order.total.toFixed(2)}`,
+    };
+  }
+
+  // ─── Send email via EmailJS ────────────────────────────────────────────────
+  async function sendOrderEmail(order) {
+    if (
+      CONFIG.EMAILJS_PUBLIC_KEY  === 'EMAILJS_PUBLIC_KEY' ||
+      CONFIG.EMAILJS_SERVICE_ID  === 'EMAILJS_SERVICE_ID' ||
+      CONFIG.EMAILJS_TEMPLATE_ID === 'EMAILJS_TEMPLATE_ID'
+    ) {
+      console.warn('[TPR] EmailJS not configured – skipping email notification.');
+      return;
     }
-    _save(CART_KEY, cart);
-    _updateCartBadge();
-    return cart;
-  }
 
-  function removeFromCart(productId) {
-    const cart = getCart().filter(i => i.id !== productId);
-    _save(CART_KEY, cart);
-    _updateCartBadge();
-    return cart;
-  }
-
-  function updateQty(productId, qty) {
-    const cart = getCart();
-    const idx  = cart.findIndex(i => i.id === productId);
-    if (idx > -1) {
-      if (qty <= 0) return removeFromCart(productId);
-      cart[idx].qty = qty;
-      _save(CART_KEY, cart);
-      _updateCartBadge();
+    try {
+      emailjs.init(CONFIG.EMAILJS_PUBLIC_KEY);
+      const params = formatOrderEmail(order);
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
+      console.info('[TPR] Order email sent successfully.');
+    } catch (err) {
+      console.error('[TPR] EmailJS error:', err);
     }
-    return getCart();
   }
 
-  function clearCart() {
-    _save(CART_KEY, []);
-    _updateCartBadge();
+  // ─── Build full order object ───────────────────────────────────────────────
+  function buildOrder(customerData, deliveryOption, cartItems, deliveryCost) {
+    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+    return {
+      orderNumber: generateOrderNumber(),
+      date:        new Date().toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg' }),
+      customer:    customerData,
+      delivery:    { method: deliveryOption, cost: deliveryCost },
+      items:       cartItems,
+      subtotal,
+      total:       subtotal + deliveryCost,
+    };
   }
 
-  function getCartTotal() {
-    return getCart().reduce((sum, i) => sum + i.price * i.qty, 0);
-  }
-
-  function getCartCount() {
-    return getCart().reduce((sum, i) => sum + i.qty, 0);
-  }
-
-  function _updateCartBadge() {
-    const count = getCartCount();
-    document.querySelectorAll('.cart-badge').forEach(el => {
-      el.textContent = count;
-      el.style.display = count > 0 ? 'flex' : 'none';
-    });
-  }
-
-  // ─── Wishlist ──────────────────────────────────────────────────────────────
-  function getWishlist() { return _load(WISHLIST_KEY); }
-
-  function toggleWishlist(product) {
-    const list  = getWishlist();
-    const idx   = list.findIndex(i => i.id === product.id);
-    if (idx > -1) {
-      list.splice(idx, 1);
-    } else {
-      list.push(product);
-    }
-    _save(WISHLIST_KEY, list);
-    return idx === -1; // true = added
-  }
-
-  function isWishlisted(productId) {
-    return getWishlist().some(i => i.id === productId);
-  }
-
-  // ─── Recently Viewed ───────────────────────────────────────────────────────
-  function addRecentlyViewed(product) {
-    let list = _load(VIEWED_KEY).filter(i => i.id !== product.id);
-    list.unshift(product);
-    if (list.length > 8) list = list.slice(0, 8);
-    _save(VIEWED_KEY, list);
-  }
-
-  function getRecentlyViewed() { return _load(VIEWED_KEY); }
-
-  // ─── Init (update badge on page load) ─────────────────────────────────────
-  function init() {
-    document.addEventListener('DOMContentLoaded', _updateCartBadge);
-  }
-
-  return {
-    getCart, addToCart, removeFromCart, updateQty, clearCart,
-    getCartTotal, getCartCount,
-    getWishlist, toggleWishlist, isWishlisted,
-    addRecentlyViewed, getRecentlyViewed,
-    init,
-  };
+  return { generateOrderNumber, saveOrder, getLastOrder, buildOrder, sendOrderEmail };
 })();
-
-Cart.init();
