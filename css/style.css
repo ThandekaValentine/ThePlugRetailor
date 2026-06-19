@@ -195,12 +195,23 @@ h4 { font-size: 1rem; font-weight: 600; }
 .nav__logo-img { height: 40px; width: auto; object-fit: contain; flex-shrink: 0; }
 .nav__logo-text { display: flex; flex-direction: column; }
 .nav__logo span { font-size: .65rem; color: var(--gold); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.nav__menu {
+  display: flex; align-items: center; gap: .25rem;
+  flex: 1; justify-content: center;
+}
 .nav__menu a {
   padding: .45rem .75rem;
   border-radius: var(--radius-sm);
   font-size: .9rem; font-weight: 500;
   color: var(--text-muted);
   transition: color var(--transition), background var(--transition);
+}
+.nav__menu a:hover,
+.nav__menu a.active { color: var(--green); background: var(--green-light); }
+
+@media (max-width: 768px) {
+  .nav__logo-img { height: 32px; }
+  .nav__logo { font-size: 1rem; gap: .4rem; }
 }
 .nav__menu a:hover,
 .nav__menu a.active { color: var(--green); background: var(--green-light); }
