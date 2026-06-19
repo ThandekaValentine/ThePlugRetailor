@@ -1,90 +1,46 @@
 /**
- * THE PLUG RETAILOR – Checkout & Order Processing
+ * THE PLUG RETAILOR - Site Configuration
+ * Update these values before deploying to GitHub Pages
  */
 
-const Checkout = (() => {
-  const ORDER_KEY = 'tpr_last_order';
+const CONFIG = {
+  // ─── EmailJS Configuration ───────────────────────────────────────────────
+  // Sign up at https://www.emailjs.com/ and replace these placeholders
+  EMAILJS_PUBLIC_KEY:   'EMAILJS_PUBLIC_KEY',
+  EMAILJS_SERVICE_ID:   'EMAILJS_SERVICE_ID',
+  EMAILJS_TEMPLATE_ID:  'EMAILJS_TEMPLATE_ID',
 
-  // ─── Generate unique order number ─────────────────────────────────────────
-  function generateOrderNumber() {
-    const n = Math.floor(100000 + Math.random() * 900000);
-    return `TP${n}`;
-  }
+  // ─── Store Owner Email ────────────────────────────────────────────────────
+  STORE_OWNER_EMAIL: 'your-email@example.com',
 
-  // ─── Save order to localStorage ───────────────────────────────────────────
-  function saveOrder(order) {
-    localStorage.setItem(ORDER_KEY, JSON.stringify(order));
-    // Also append to order history
-    const history = JSON.parse(localStorage.getItem('tpr_order_history') || '[]');
-    history.unshift(order);
-    localStorage.setItem('tpr_order_history', JSON.stringify(history.slice(0, 50)));
-  }
+  // ─── WhatsApp Support Number ──────────────────────────────────────────────
+  // Replace with your actual WhatsApp number (digits only, with country code)
+  WHATSAPP_NUMBER: '27XXXXXXXXX',
 
-  function getLastOrder() {
-    return JSON.parse(localStorage.getItem(ORDER_KEY) || 'null');
-  }
+  // ─── Store Details ─────────────────────────────────────────────────────────
+  STORE_NAME:    'The Plug Retailor',
+  STORE_EMAIL:   'info@theplugretailor.co.za',
+  STORE_PHONE:   '+27 XX XXX XXXX',
+  STORE_ADDRESS: 'Johannesburg, Gauteng, South Africa',
 
-  // ─── Format order for email ────────────────────────────────────────────────
-  function formatOrderEmail(order) {
-    const itemLines = order.items.map(i =>
-      `${i.qty} x ${i.name} (${i.brand}) [${i.condition}] – R${(i.price * i.qty).toFixed(2)}`
-    ).join('\n');
+  // ─── Delivery Fees (ZAR) ──────────────────────────────────────────────────
+  DELIVERY_FEES: {
+    standard:   85,
+    express:    149,
+    collection: 0,
+  },
 
-    return {
-      to_email:       CONFIG.STORE_OWNER_EMAIL,
-      store_name:     CONFIG.STORE_NAME,
-      order_number:   order.orderNumber,
-      order_date:     order.date,
-      // Customer
-      customer_name:  order.customer.name,
-      customer_email: order.customer.email,
-      customer_phone: order.customer.phone,
-      customer_address:`${order.customer.address}, ${order.customer.city}, ${order.customer.province}, ${order.customer.postal}`,
-      // Items
-      order_items:    itemLines,
-      // Delivery
-      delivery_method: order.delivery.method,
-      delivery_cost:  `R${order.delivery.cost.toFixed(2)}`,
-      // Totals
-      subtotal:       `R${order.subtotal.toFixed(2)}`,
-      total:          `R${order.total.toFixed(2)}`,
-    };
-  }
+  // ─── Social Media URLs (replace # with actual URLs) ──────────────────────
+  SOCIAL: {
+    facebook:  '#',
+    instagram: '#',
+    tiktok:    '#',
+    twitter:   '#',
+  },
 
-  // ─── Send email via EmailJS ────────────────────────────────────────────────
-  async function sendOrderEmail(order) {
-    if (
-      CONFIG.EMAILJS_PUBLIC_KEY  === 'EMAILJS_PUBLIC_KEY' ||
-      CONFIG.EMAILJS_SERVICE_ID  === 'EMAILJS_SERVICE_ID' ||
-      CONFIG.EMAILJS_TEMPLATE_ID === 'EMAILJS_TEMPLATE_ID'
-    ) {
-      console.warn('[TPR] EmailJS not configured – skipping email notification.');
-      return;
-    }
+  // ─── Google Maps Embed URL ────────────────────────────────────────────────
+  // Replace with your actual embed URL from Google Maps
+  MAPS_EMBED_URL: 'https://maps.google.com/maps?q=Johannesburg,+Gauteng,+South+Africa&output=embed',
+};
 
-    try {
-      emailjs.init(CONFIG.EMAILJS_PUBLIC_KEY);
-      const params = formatOrderEmail(order);
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
-      console.info('[TPR] Order email sent successfully.');
-    } catch (err) {
-      console.error('[TPR] EmailJS error:', err);
-    }
-  }
 
-  // ─── Build full order object ───────────────────────────────────────────────
-  function buildOrder(customerData, deliveryOption, cartItems, deliveryCost) {
-    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
-    return {
-      orderNumber: generateOrderNumber(),
-      date:        new Date().toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg' }),
-      customer:    customerData,
-      delivery:    { method: deliveryOption, cost: deliveryCost },
-      items:       cartItems,
-      subtotal,
-      total:       subtotal + deliveryCost,
-    };
-  }
-
-  return { generateOrderNumber, saveOrder, getLastOrder, buildOrder, sendOrderEmail };
-})();
