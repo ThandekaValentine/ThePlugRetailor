@@ -1,44 +1,39 @@
 /**
- * THE PLUG RETAILOR - Site Configuration
- * Update these values before deploying to GitHub Pages
+ * THE PLUG RETAILOR – Notification System
+ * Lightweight toast notifications (no dependencies)
  */
 
-const CONFIG = {
-  // ─── EmailJS Configuration ───────────────────────────────────────────────
-  // Sign up at https://www.emailjs.com/ and replace these placeholders
-  EMAILJS_PUBLIC_KEY:   'EMAILJS_PUBLIC_KEY',
-  EMAILJS_SERVICE_ID:   'EMAILJS_SERVICE_ID',
-  EMAILJS_TEMPLATE_ID:  'EMAILJS_TEMPLATE_ID',
+const Notifications = (() => {
+  // Inject container once
+  function _getContainer() {
+    let c = document.getElementById('tpr-toast-container');
+    if (!c) {
+      c = document.createElement('div');
+      c.id = 'tpr-toast-container';
+      c.setAttribute('aria-live', 'polite');
+      c.setAttribute('aria-atomic', 'false');
+      document.body.appendChild(c);
+    }
+    return c;
+  }
 
-  // ─── Store Owner Email ────────────────────────────────────────────────────
-  STORE_OWNER_EMAIL: 'your-email@example.com',
+  /**
+   * Show a toast notification
+   * @param {string} message  - Text to display
+   * @param {'success'|'error'|'info'|'warning'} type
+   * @param {number} duration - ms before auto-dismiss (0 = sticky)
+   */
+  function show(message, type = 'info', duration = 3500) {
+    const container = _getContainer();
+    const toast     = document.createElement('div');
+    toast.className = `tpr-toast tpr-toast--${type}`;
 
-  // ─── WhatsApp Support Number ──────────────────────────────────────────────
-  // Replace with your actual WhatsApp number (digits only, with country code)
-  WHATSAPP_NUMBER: '27XXXXXXXXX',
+    const icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+    toast.innerHTML = `
+      <span class="tpr-toast__icon">${icons[type] ?? 'ℹ'}</span>
+      <span class="tpr-toast__msg">${message}</span>
+      <button class="tpr-toast__close" aria-label="Dismiss">×</button>
+    `;
 
-  // ─── Store Details ─────────────────────────────────────────────────────────
-  STORE_NAME:    'The Plug Retailor',
-  STORE_EMAIL:   'info@theplugretailor.co.za',
-  STORE_PHONE:   '+27 XX XXX XXXX',
-  STORE_ADDRESS: 'Johannesburg, Gauteng, South Africa',
-
-  // ─── Delivery Fees (ZAR) ──────────────────────────────────────────────────
-  DELIVERY_FEES: {
-    standard:   85,
-    express:    149,
-    collection: 0,
-  },
-
-  // ─── Social Media URLs (replace # with actual URLs) ──────────────────────
-  SOCIAL: {
-    facebook:  '#',
-    instagram: '#',
-    tiktok:    '#',
-    twitter:   '#',
-  },
-
-  // ─── Google Maps Embed URL ────────────────────────────────────────────────
-  // Replace with your actual embed URL from Google Maps
-  MAPS_EMBED_URL: 'https://maps.google.com/maps?q=Johannesburg,+Gauteng,+South+Africa&output=embed',
-};
+    // Dismiss on close button
+    toast.querySelector('.tpr-toast__close').addEventListener('click', () => _dismiss(toast));
